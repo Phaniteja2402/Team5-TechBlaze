@@ -199,3 +199,108 @@ app.post('/transcribe/:stringUrl', (req, res) => {
     audioFunc(audioUrl);
   });
   
+  
+app.post("/summarize", (req, res) => { 
+  const text = req.body.text;
+
+  console.log('Text to Summarize :', text);
+
+  // const text = "In a bustling city where dreams hung like the evening mist, an unlikely companionship sparked between Leo, a reserved bookstore owner with an affinity for forgotten tales, and Elara, a street artist who painted the town with vibrant hues of rebellion. Their paths converged on a serendipitous afternoon when Leo stumbled upon Elara creating a mural on the alley wall adjacent to his store. An unexpected bond blossomed as they shared their passions, weaving narratives and colors into the fabric of their daily lives. Through their shared love for storytelling and art, they uncovered the beauty in embracing the unspoken and discovered that in the quiet harmony of words and colors, they found a canvas for their hearts to speak."
+  const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMmM0ZGY5YTMtYzZlMC00YzNkLTg5MmUtZWVhODY5YTFkMTM3IiwidHlwZSI6ImFwaV90b2tlbiJ9.2A-vJ3TvGKSNkVICCcjHYvddH4iy4ObjJpeNB5u5f_U";
+  const agent = new http.Agent({ keepAlive: true, keepAliveMsecs: 30000 });
+
+  const options = {
+      method: "POST",
+      url: "https://api.edenai.run/v2/text/summarize",
+      headers: {
+          authorization: `Bearer ${apiKey}`,
+      },
+      data: {
+          show_original_response: false,
+          fallback_providers: "",
+          output_sentences: 3,
+          providers: "microsoft,connexun,openai,emvista",
+          text: text,
+          language: "en",
+          agent: agent,
+      },
+  };
+
+  axios
+  .request(options)
+      .then((response) => {
+        console.log(text)
+        // console.log(response)
+        const textSummarized = response.data.microsoft.result
+        console.log(textSummarized);
+        const resposeData = {
+          textSummarized: textSummarized
+        }
+        res.send(resposeData)
+  })
+  .catch((error) => {
+      console.error(error);
+  });
+})
+
+
+app.post("/translate", async (req, res) => {
+  API_KEY = "AIzaSyDGmUXxPqob8oLZ-BonU-hZrSVZ-2uw68s"
+  const text = req.body.text;
+  console.log(text)
+  const language = req.body.lang
+  const translate = async(text) => {
+    let working = await axios.post(
+      `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
+      { q: text, target: language }
+    );
+    console.log(working)
+    let translation = working.data.data.translations[0].translatedText;
+    console.log(translation)
+    const dataToSend = {
+      text: text,
+      lang: language,
+      translation: translation,
+  };
+    res.send(dataToSend)
+  }
+  const tranlatedText = translate(text);
+  const encodedParams = new URLSearchParams();
+  encodedParams.set('q', text);
+})
+
+  
+function replaceAllOneCharAtATime(inSource, inToReplace, inReplaceWith) {
+  var output="";
+  var firstReplaceCompareCharacter = inToReplace.charAt(0);
+  var sourceLength = inSource.length;
+  var replaceLengthMinusOne = inToReplace.length - 1;
+  for(var i = 0; i < sourceLength; i++){
+      var currentCharacter = inSource.charAt(i);
+      var compareIndex = i;
+      var replaceIndex = 0;
+      var sourceCompareCharacter = currentCharacter;
+      var replaceCompareCharacter = firstReplaceCompareCharacter;
+      while(true){
+          if(sourceCompareCharacter != replaceCompareCharacter){
+          output += currentCharacter;
+          break;
+      }
+      if(replaceIndex >= replaceLengthMinusOne) {
+          i+=replaceLengthMinusOne;
+          output += inReplaceWith;
+          //was a match
+          break;
+      }
+      compareIndex++; replaceIndex++;
+      if(i >= sourceLength){
+          // not a match
+          break;
+      }
+      sourceCompareCharacter = inSource.charAt(compareIndex)
+          replaceCompareCharacter = inToReplace.charAt(replaceIndex);
+      }   
+      replaceCompareCharacter += currentCharacter;
+  }
+  return output;
+}
