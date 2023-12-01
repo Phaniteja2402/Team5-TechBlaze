@@ -40,3 +40,38 @@ app.get('/transcribe.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'transcribe.html'));
 });
 
+
+// Define the port for your server to listen on
+const PORT = process.env.PORT || 3000;
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+// Parse incoming request bodies in a middleware before your handlers
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
+app.post("/register/", async (req, res) => {
+  const registernow = async () => {
+    console.log(req.body.email)
+    first_name = req.body.first_name
+    last_name = req.body.last_name
+    email = req.body.email
+    username = req.body.email
+    password = req.body.password
+    console.log(email)
+    const response = await fetch('http://127.0.0.1:8000/api/register/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ first_name, last_name, username, email, password }),
+    });
+    res.send(response)
+    // console.log(response)
+  };
+  await registernow()
+});
