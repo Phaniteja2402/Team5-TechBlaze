@@ -268,3 +268,39 @@ app.post("/translate", async (req, res) => {
   const encodedParams = new URLSearchParams();
   encodedParams.set('q', text);
 })
+
+  
+function replaceAllOneCharAtATime(inSource, inToReplace, inReplaceWith) {
+  var output="";
+  var firstReplaceCompareCharacter = inToReplace.charAt(0);
+  var sourceLength = inSource.length;
+  var replaceLengthMinusOne = inToReplace.length - 1;
+  for(var i = 0; i < sourceLength; i++){
+      var currentCharacter = inSource.charAt(i);
+      var compareIndex = i;
+      var replaceIndex = 0;
+      var sourceCompareCharacter = currentCharacter;
+      var replaceCompareCharacter = firstReplaceCompareCharacter;
+      while(true){
+          if(sourceCompareCharacter != replaceCompareCharacter){
+          output += currentCharacter;
+          break;
+      }
+      if(replaceIndex >= replaceLengthMinusOne) {
+          i+=replaceLengthMinusOne;
+          output += inReplaceWith;
+          //was a match
+          break;
+      }
+      compareIndex++; replaceIndex++;
+      if(i >= sourceLength){
+          // not a match
+          break;
+      }
+      sourceCompareCharacter = inSource.charAt(compareIndex)
+          replaceCompareCharacter = inToReplace.charAt(replaceIndex);
+      }   
+      replaceCompareCharacter += currentCharacter;
+  }
+  return output;
+}
