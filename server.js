@@ -242,3 +242,29 @@ app.post("/summarize", (req, res) => {
       console.error(error);
   });
 })
+
+
+app.post("/translate", async (req, res) => {
+  API_KEY = "AIzaSyDGmUXxPqob8oLZ-BonU-hZrSVZ-2uw68s"
+  const text = req.body.text;
+  console.log(text)
+  const language = req.body.lang
+  const translate = async(text) => {
+    let working = await axios.post(
+      `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
+      { q: text, target: language }
+    );
+    console.log(working)
+    let translation = working.data.data.translations[0].translatedText;
+    console.log(translation)
+    const dataToSend = {
+      text: text,
+      lang: language,
+      translation: translation,
+  };
+    res.send(dataToSend)
+  }
+  const tranlatedText = translate(text);
+  const encodedParams = new URLSearchParams();
+  encodedParams.set('q', text);
+})
