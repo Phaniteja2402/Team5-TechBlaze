@@ -1,0 +1,30 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "A speech to text and text analysis website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "speech-to-text",
+    "whisper-api",
+    "transcription",
+    "audio",
+    "video"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@distube/ytdl-core": "^4.13.3",
+    "axios": "^1.6.2",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "openai": "^4.20.0",
+    "ytdl-core": "npm:@distube/ytdl-core@^4.13.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
