@@ -155,3 +155,47 @@ app.post('/transcribefronyoutube/:stringUrl', async (req, res) => {
     });
   });
   
+// Handle transcribing video from a url
+app.post('/transcribe/:stringUrl', (req, res) => {
+    const stringUrl = req.params.stringUrl
+    console.log("we are working on transcriptions" + stringUrl)
+    const audioUrl = replaceAllOneCharAtATime(stringUrl, '-', '/');
+    console.log('Received message:', audioUrl);
+    
+    // Process the message as needed
+    // For example, send a response with the message
+    // res.send(`Received message: ${audioUrl}`);
+    
+    const audioFunc = async (audioUrl) => {
+      console.log("we are working on transcriptions")
+      const audioPath = "cache-audio.mp3"
+      const file = fs.createWriteStream(audioPath);
+      const absolutePath = path.resolve(audioPath, __dirname);
+      const totalPath = path.join(absolutePath, audioPath);
+      console.log(totalPath);
+      const request = http.get(audioUrl, function(response) {
+          response.pipe(file);
+          file.on("finish", async () => {
+            file.close();
+            console.log("Download Completed");
+            console.log("Transcribing file");
+            const transcription = await openai.audio.transcriptions.create({
+                file: fs.createReadStream(totalPath),
+                model: "whisper-1"
+            })
+            console.log(transcription)
+            console.log("Deleting the file");
+            fs.unlink(totalPath, (err) => {
+                if (err) {
+                  console.error('Error deleting file:', err);
+                  return;
+                }
+                console.log('File deleted successfully');
+            });
+            res.send(transcription)
+          });
+      });
+    }
+    audioFunc(audioUrl);
+  });
+  
