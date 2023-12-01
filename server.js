@@ -99,3 +99,59 @@ app.post("/login/", async (req, res) => {
     await loginnow()
   });
   
+// Handle transcribing video from a youtube url
+app.post('/transcribefronyoutube/:stringUrl', async (req, res) => {
+
+    // const stringUrl = req.params.stringUrl
+    const stringUrl = req.body.url
+    console.log("we are working on transcriptions" + stringUrl)
+    const audioUrl = stringUrl
+    console.log('Received message:', audioUrl);
+    
+    const audioPath = "cache-audio.mp3"
+    const absolutePath = path.resolve(audioPath, __dirname);
+    const totalPath = path.join(absolutePath, audioPath);
+  
+    await new Promise((resolve) => {
+      const videoURL = audioUrl;
+      console.log(videoURL)
+      if (!ytdl.validateURL(videoURL)) {
+        throw new Error('Invalid YouTube URL');
+      }
+      
+      const videoReadableStream = ytdl(videoURL, {
+        filter: 'audioonly', // Extract audio only
+        format: 'mp3' // Save as MP3
+      });
+        
+      const writeStream = fs.createWriteStream(totalPath);
+        
+      videoReadableStream.pipe(writeStream);
+  
+      writeStream.on('finish', async () => {
+        console.log(`File ${totalPath} has been downloaded successfully!`);
+        console.log("Download Completed");
+        console.log("Transcribing file");
+        const transcription = await openai.audio.transcriptions.create({
+          file: fs.createReadStream(totalPath),
+          model: "whisper-1"
+        })
+        console.log(transcription)
+        console.log("Deleting the file");
+        fs.unlink(totalPath, (err) => {
+          if (err) {
+            console.error('Error deleting file:', err);
+            return;
+          }
+          console.log('File deleted successfully');
+        });
+        res.send(transcription)
+        console.log(transcription)
+      });
+  
+      writeStream.on('error', (err) => {
+        console.error('Error downloading the file:', err);
+      });
+    });
+  });
+  
