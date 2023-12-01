@@ -75,3 +75,27 @@ app.post("/register/", async (req, res) => {
   };
   await registernow()
 });
+
+app.post("/login/", async (req, res) => {
+    const loginnow = async () => {
+      email = req.body.email
+      password = req.body.password
+      console.log(email)
+      const fetchPromise = await fetch('http://127.0.0.1:8000/api/token/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      }).then(
+        response => {
+          res.send(response)
+          // console.log(response)
+          // console.log(response.body)
+        }
+      );
+      // console.log(response)
+    };
+    await loginnow()
+  });
+  
