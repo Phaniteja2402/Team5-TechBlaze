@@ -27,8 +27,14 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
+    <!-- Custom Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <!-- pdf download script files -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
 </head>
 
 <body>
@@ -51,10 +57,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="/transcribe.html" class="nav-item nav-link active">Transcribe</a>
-                    <a href="/translate.html" class="nav-item nav-link">Translate</a>
-                    <a href="/summarize.html" class="nav-item nav-link">Summarize</a>
-                    <a href="/keywords.html" class="nav-item nav-link">Keyword Extraction</a>
+                    <a href="/transcribe.html" class="nav-item nav-link active">Transcribe Summarize and Translate</a>
                 </div>
                 <div class="d-none d-lg-flex ms-2">
                     <a class="btn btn-light btn-sm-square rounded-circle ms-3"  href="/index.html">
@@ -67,7 +70,7 @@
     <!-- Navbar End -->
 
 
-    <!-- Contact Start -->
+    <!-- Transcribe Start -->
     <div class="container-xxl py-5">
         <div class="container pt-5">
             <div class="row">
@@ -86,37 +89,31 @@
                     </div> -->
                 </div>
                 <div class="col-lg-3 px-2 wow fadeIn" data-wow-delay="0.1s">
-                    <!-- <p class="">Enter Youtube Url</p>
-                    <div class="col-md-12 pb-5">
-                        <div class="form-floating">
-                            <input type="text" class="form-control border border-primary" id="text" placeholder="Enter Youtube Url">
-                            <label class="text-primary" for="uname">Youtube Url</label>
+                    <div id="use_youtube" class="d-none">
+                        <div class="col-md-12">
+                            <p class="">Enter Youtube Url</p>
+                            <div class="form-floating">
+                                <input type="url" class="form-control border border-primary" id="youtube_url" placeholder="Enter Youtube Url">
+                                <label class="text-primary" for="uname">Youtube Url</label>
+                            </div>
+                            <button id="transcribe_yt_video" class="btn btn-primary w-100 pb-2 px-3 mb-3">Transcribe</button>
                         </div>
-                    </div> -->
-                    
-                    <div class="drop-zone" id="dropZone">
-                        <p>Click anywhere or drag and drop a file here</p>
                     </div>
-                    <p class="">Select file to transcribe</p>
-                    <input type="file" id="fileInput" class="form-control" accept=".mp3, .wav, .mp4, .ogg">
+                    <div id="upload_video" class="d-block">
+                        <div class="drop-zone" id="dropZone">
+                            <p>Click anywhere or drag and drop a file here</p>
+                        </div>
+                        <p class="">Select file to transcribe</p>
+                        <input type="file" id="fileInput" class="form-control" accept=".mp3, .wav, .mp4, .ogg">
+                    </div>
                 </div>
                 <div class="col-lg-3 px-2 wow fadeIn" data-wow-delay="0.1s">
                     <p class="d-inline-block border border-primary rounded text-primary fw-semi-bold py-1 px-2 animated slideInDown">
-                        <a class="nav-link">Use Youtube Link</a>
+                        <a id="youtube_or_video" class="nav-link">Use Youtube Link</a>
                     </p>
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-inline-block border border-primary rounded text-primary fw-semi-bold py-2 px-4 animated slideInDown" data-bs-toggle="dropdown">Select Language</a>
-                        <div class="dropdown-menu border-light m-0 order-md-2">
-                            <a class="dropdown-item">English</a>
-                            <a class="dropdown-item">Français</a>
-                            <a class="dropdown-item">Español</a>
-                            <a class="dropdown-item">Nederlands</a>
-                            <a class="dropdown-item">العربية</a>
-                            <a class="dropdown-item">普通话/汉语</a>
-                            <a class="dropdown-item">русский язык</a>
-                            <a class="dropdown-item">Deutsch</a>
-                            <a class="dropdown-item">日本語</a>
-                            <a class="dropdown-item">Português</a>
+                        <a id="lang_selected" class="nav-link dropdown-toggle d-inline-block border border-primary rounded text-primary fw-semi-bold py-2 px-4 animated slideInDown" data-bs-toggle="dropdown">Select Language</a>
+                        <div id="language_container" class="dropdown-menu border-light m-0 order-md-2">
                         </div>
                     </div>               
                 </div>
@@ -132,15 +129,41 @@
                         <textarea disabled class="form-control border border-info" id="analyzedContent" rows="10"></textarea>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-4">
                     <button id="summarize_btn" class="btn btn-primary py-2 px-3 mx-3">Summarize</button>
-                    <button id="keywords_btn" class="btn btn-primary py-2 px-3 mx-3">Extract Keywords</button>   
+                    <!-- <button id="keywords_btn" class="btn btn-primary py-2 px-3 mx-3">Extract Keywords</button>    -->
+                </div>
+                <div class="col-4">
                     <button id="translate_btn" class="btn btn-primary py-2 px-3 mx-3">Translate</button>
+                </div>
+                <div class="col-4">
+                    <button id="download_btn" class="btn btn-primary py-2 px-3 mx-3">Download Analyzed Content</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Contact End -->
+    <!-- Transcribe End -->
+
+    
+    <script type="text/javascript">
+        
+        function downloadPdf() {
+            const analyzedContent = document.getElementById("analyzedContent");
+            var docDefinition = {
+                content: [
+                    {text:analyzedContent.value}
+                ],
+                defaultStyle: {
+                }
+            };
+            pdfMake.createPdf(docDefinition).print();
+        }
+        const downloadBtn = document.getElementById("download_btn");
+        downloadBtn.addEventListener("click", () => {
+            alert("hello")
+            downloadPdf();
+        })
+    </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -151,7 +174,7 @@
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/counterup/counterup.min.js"></script>
 
-    <!-- Template Javascript -->
+    <!-- Javascript Files -->
     <script src="js/main.js"></script>
     <script src="js/features.js"></script>
 </body>
