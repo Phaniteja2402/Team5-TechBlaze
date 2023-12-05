@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const ytVideos = document.getElementById("transcribe_yt_video");
     const loadingIcon = document.getElementById("spinner");
     let text = "Please put a text to be analysed"
+    url = "http://18.223.182.143:3000/"
     let translatedText = ""
     let languageSelected = "en"
     let fromYoutube = false
@@ -159,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function() {
             message: fileUrl
         };
 
-        fetch(`http://localhost:3000/transcribe/${newUrlString}`, {
+        fetch(`${url}/transcribe/${newUrlString}`, {
             method: 'POST',
         })
             .then(response => {
@@ -247,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function() {
             url: fileUrl
         };
 
-        fetch(`http://localhost:3000/transcribefronyoutube/${newUrlString}`, {
+        fetch(`${url}/transcribefronyoutube/${newUrlString}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
