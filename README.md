@@ -51,9 +51,10 @@ Language conevrsion text
 
 
 
-#### Note
+#### Technologies used for Web application
 
-- Technologies We have used HTML, Bootstrap for frontend and for backend development used Javascript & Django
+- HTML, Bootstrap for frontend
+- Backend development used Javascript & Django
 
 ##### API's
 
