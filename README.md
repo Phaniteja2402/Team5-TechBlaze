@@ -49,3 +49,15 @@ Language conevrsion text
 
 <img src="https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/af1c077e-42d6-4e7c-a209-2a9ac30dee35" width=600 height=300>
 
+
+
+#### Note
+
+- Technologies We have used HTML, Bootstrap for frontend and for backend development used Javascript & Django
+
+##### API's
+
+- OpenAI Whispher speech to text API: https://platform.openai.com/docs/guides/speech-to-text
+- EdenAI API : https://www.edenai.co/feature/summarization-apis
+- Google Cloud Translate API: https://cloud.google.com/translate/docs/reference/rest
+
