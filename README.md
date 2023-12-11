@@ -24,19 +24,28 @@
 
 ##Input 
 - .mp3,.wav,.mp4 files and Youtube Video URL
-![Image1](https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/abf8ef33-935a-45c0-9537-7410a0304ef6)
+  
 <img src="https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/abf8ef33-935a-45c0-9537-7410a0304ef6" width=600 height=300>
-![Image2](https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/9cc6af4b-3056-41b6-bf98-39db23114bc5)
+
+<img src="https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/9cc6af4b-3056-41b6-bf98-39db23114bc5" width=600 height=300>
+
 
 ##Output
 - Once we given the audio files and youtube URL to the web application it will transcribe the audio and youtube video conversation to transcript text & to generate the summary click on the summarize button. Baased your deside language you can change the summary to different languge, as shown the below output samples.
 
 Transcript
-![Image3](https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/74640875-d3a1-4bb5-aba4-d680beab86ff)
+
+<img src="https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/74640875-d3a1-4bb5-aba4-d680beab86ff" width=600 height=300>
+
 Summary 
-![Image4](https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/964f8107-e8ef-47d7-bb43-dc7bbabeda1f)
+
+<img src="https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/964f8107-e8ef-47d7-bb43-dc7bbabeda1f" width=600 height=300>
+
 desired langaue select
-![Image5](https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/2359930f-c280-4edc-8410-d73dfcda05ad)
+
+<img src="https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/2359930f-c280-4edc-8410-d73dfcda05ad" width=600 height=300>
+
 Language conevrsion text  
-![Image6](https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/af1c077e-42d6-4e7c-a209-2a9ac30dee35)
+
+<img src="https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/af1c077e-42d6-4e7c-a209-2a9ac30dee35" width=600 height=300>
 
