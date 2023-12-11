@@ -22,7 +22,7 @@
 ![Flow](https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/369ca557-b36f-4930-b0a5-d52a41e1ac75)
 
 
-##Input 
+### Input 
 - .mp3,.wav,.mp4 files and Youtube Video URL
   
 <img src="https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/abf8ef33-935a-45c0-9537-7410a0304ef6" width=600 height=300>
@@ -30,7 +30,7 @@
 <img src="https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/9cc6af4b-3056-41b6-bf98-39db23114bc5" width=600 height=300>
 
 
-##Output
+### Output
 - Once we given the audio files and youtube URL to the web application it will transcribe the audio and youtube video conversation to transcript text & to generate the summary click on the summarize button. Baased your deside language you can change the summary to different languge, as shown the below output samples.
 
 Transcript
@@ -41,7 +41,7 @@ Summary
 
 <img src="https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/964f8107-e8ef-47d7-bb43-dc7bbabeda1f" width=600 height=300>
 
-desired langaue select
+Desired langaue select
 
 <img src="https://github.com/Phaniteja2402/Team5-TechBlaze/assets/80826063/2359930f-c280-4edc-8410-d73dfcda05ad" width=600 height=300>
 
